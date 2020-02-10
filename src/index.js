@@ -13,11 +13,31 @@
 // {
 //     moviesWatched:
 // }
+import {
+    createStore
+} from 'redux';
+
 const addMovie = 'addMovie';
-function actionAddMovie(addMovie){
+function actionAddMovie(aMovie) {
     return {
-        moviesWatched: addMovie
+        type: addMovie,
+        aMovie
     }
+}
+
+const defaultState1 = { movies: [] }
+function movieList(state = defaultState1, action) {
+    const newState = { ...state };
+    console.log(newState);
+    switch (action.type) {
+        case addMovie:
+            newState.movies = [...state.movies, action.aMovie]
+            console.log(newState)
+            break;
+        default:
+            break;
+    }
+    return newState;
 }
 
 
@@ -25,9 +45,9 @@ function actionAddMovie(addMovie){
 //     favoriteSong:
 // }
 const addFavoriteSong = 'addFavoriteSong';
-function actionAddFavoriteSong(addFavoriteSong){
+function actionAddFavoriteSong() {
     return {
-        favoriteSong: addFavoriteSong
+        type: addFavoriteSong
     }
 }
 
@@ -37,9 +57,9 @@ function actionAddFavoriteSong(addFavoriteSong){
 //     burritosEaten:
 // }   
 const numOfBurritos = 'numOfBurritos';
-function actionAddNumberOfBurritos(numOfBurrito){
+function actionAddNumberOfBurritos() {
     return {
-        burritosEaten: numOfBurrito
+        type: numOfBurritos
     }
 }
 
@@ -48,9 +68,9 @@ function actionAddNumberOfBurritos(numOfBurrito){
 //     coffeeDrank:
 // }
 const numOfCoffee = 'numOfCofffee';
-function actionAddNumberOfCoffee(numOfCoffee){
+function actionAddNumberOfCoffee() {
     return {
-        coffeeDrank: numOfCoffee
+        type: numOfCoffee
     }
 }
 
@@ -59,10 +79,19 @@ function actionAddNumberOfCoffee(numOfCoffee){
 //     preferredSandwich:
 // }
 const whichSandwich = 'whichSandwich';
-function actionWhichSandwich(whichSandwich){
+function actionWhichSandwich() {
     return {
-        preferredSandwich: whichSandwich
+        type: whichSandwich
     }
 }
 
 
+const store = createStore(movieList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+store.subscribe(() => {
+    console.table(store.getState());
+})
+
+store.dispatch(actionAddMovie('Goodfellas'));
+store.dispatch(actionAddMovie('fsadfadf'));
+store.dispatch(actionAddMovie('Gooderqqwrfellas'));
