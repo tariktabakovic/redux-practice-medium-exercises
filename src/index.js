@@ -10,13 +10,13 @@
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 // serviceWorker.unregister();
-// {
-//     moviesWatched:
-// }
 import {
     createStore
 } from 'redux';
 
+// {
+//     moviesWatched:
+// }
 const addMovie = 'addMovie';
 function actionAddMovie(aMovie) {
     return {
@@ -78,11 +78,26 @@ function actionAddNumberOfCoffee() {
 // {
 //     preferredSandwich:
 // }
-const whichSandwich = 'whichSandwich';
-function actionWhichSandwich() {
-    return {
-        type: whichSandwich
+// const whichSandwich = 'whichSandwich';
+// function actionAddToLunch() {
+//     return {
+//         type: whichSandwich
+//     }
+// }
+const defaultLunchState = {
+    lunch: 'burrito'
+}
+const UPDATE_LUNCH_ITEM = 'UPDATE_LUNCH_ITEM '
+function lunch(state=defaultState1, action){
+    const newState= {...state};
+    switch(action.type){
+        case UPDATE_LUNCH_ITEM:
+            newState.lunch = action.payload.itemName;
+            break;
+        default:
+            break;
     }
+    return newState;
 }
 
 
