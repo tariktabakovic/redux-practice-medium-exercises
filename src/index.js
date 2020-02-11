@@ -11,7 +11,8 @@
 // Learn more about service workers: https://bit.ly/CRA-PWA
 // serviceWorker.unregister();
 import {
-    createStore
+    createStore,
+    combineReducers
 } from 'redux';
 
 // {
@@ -41,54 +42,7 @@ function movieList(state = defaultState1, action) {
 }
 
 
-// {
-//     favoriteSong:
-// }
-const addFavoriteSong = 'addFavoriteSong';
-function actionAddFavoriteSong() {
-    return {
-        type: addFavoriteSong
-    }
-}
-
-
-
-// {   
-//     burritosEaten:
-// }   
-const numOfBurritos = 'numOfBurritos';
-function actionAddNumberOfBurritos() {
-    return {
-        type: numOfBurritos
-    }
-}
-
-
-// {
-//     coffeeDrank:
-// }
-const numOfCoffee = 'numOfCofffee';
-function actionAddNumberOfCoffee() {
-    return {
-        type: numOfCoffee
-    }
-}
-
-
-// {
-//     preferredSandwich:
-// }
-// const whichSandwich = 'whichSandwich';
-// function actionAddToLunch() {
-//     return {
-//         type: whichSandwich
-//     }
-// }
-const defaultLunchState = {
-    lunch: 'burrito'
-}
 const UPDATE_LUNCH_ITEM = 'UPDATE_LUNCH_ITEM';
-
 function actionUpdateLunch(itemName){
     return {
         type: UPDATE_LUNCH_ITEM,
@@ -98,6 +52,26 @@ function actionUpdateLunch(itemName){
     }
 }
 
+const UPDATE_DESSERT_ITEM = 'UPDATE_DESSERT_ITEM';
+function actionUpdateDessert(itemName){
+    return {
+        type: UPDATE_DESSERT_ITEM,
+        payload: {
+            itemName
+        }
+    }
+}
+
+const INCREMENT_COFFEE_COUNT = 'INCREMENT_COFFEE_COUNT'
+function actionIncrementCoffee(){
+    return {
+        type: INCREMENT_COFFEE_COUNT
+    }
+}
+
+const defaultLunchState = {
+    lunch: ''
+}
 function lunch(state=defaultLunchState, action){
     const newState= {...state};
     switch(action.type){
@@ -110,15 +84,53 @@ function lunch(state=defaultLunchState, action){
     return newState;
 }
 
-const store = createStore(lunch, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-const store = createStore(movieList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const defaultDessertState= '';
+function dessert(state= defaultDessertState, action){
+    let newState= state;
+    switch(action.type){
+        case UPDATE_DESSERT_ITEM:
+            newState = action.payload.itemName;
+            break;
+    }
+    return newState;
+}
+
+const defaultCoffeeState= 0;
+function coffeeCount(state=defaultCoffeeState, action){
+    let newState = state;
+    switch(action.type){
+        case INCREMENT_COFFEE_COUNT:
+            newState += 1;
+            break;
+        default:
+            break;
+    }
+    return newState;
+}
+
+const rootReducer = combineReducers(
+    {
+        // part of tree: reducer function 
+        lunch: lunch,
+        coffee: coffeeCount,
+        dessert: dessert
+    }
+);
+
+
+
+const store = createStore(  rootReducer,
+                            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+                            );
 
 store.subscribe(() => {
     console.table(store.getState());
 })
 
 // dispatch only takes action objects
-store.dispatch(actionUpdateLunch('chicken'))
+store.dispatch(actionUpdateLunch('chicken'));
+store.dispatch(actionUpdateDessert('ice cream'));
+
 
 store.dispatch(actionAddMovie('Goodfellas'));
 store.dispatch(actionAddMovie('fsadfadf'));
