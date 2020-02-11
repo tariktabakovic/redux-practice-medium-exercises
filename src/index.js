@@ -87,7 +87,17 @@ function actionAddNumberOfCoffee() {
 const defaultLunchState = {
     lunch: 'burrito'
 }
-const UPDATE_LUNCH_ITEM = 'UPDATE_LUNCH_ITEM '
+const UPDATE_LUNCH_ITEM = 'UPDATE_LUNCH_ITEM';
+
+function actionUpdateLunch(itemName){
+    return {
+        type: UPDATE_LUNCH_ITEM,
+        payload: {
+            itemName
+        }
+    }
+}
+
 function lunch(state=defaultLunchState, action){
     const newState= {...state};
     switch(action.type){
@@ -106,6 +116,9 @@ const store = createStore(movieList, window.__REDUX_DEVTOOLS_EXTENSION__ && wind
 store.subscribe(() => {
     console.table(store.getState());
 })
+
+// dispatch only takes action objects
+store.dispatch(actionUpdateLunch('chicken'))
 
 store.dispatch(actionAddMovie('Goodfellas'));
 store.dispatch(actionAddMovie('fsadfadf'));
