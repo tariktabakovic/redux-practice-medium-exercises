@@ -88,7 +88,7 @@ const defaultLunchState = {
     lunch: 'burrito'
 }
 const UPDATE_LUNCH_ITEM = 'UPDATE_LUNCH_ITEM '
-function lunch(state=defaultState1, action){
+function lunch(state=defaultLunchState, action){
     const newState= {...state};
     switch(action.type){
         case UPDATE_LUNCH_ITEM:
@@ -100,7 +100,7 @@ function lunch(state=defaultState1, action){
     return newState;
 }
 
-
+const store = createStore(lunch, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const store = createStore(movieList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 store.subscribe(() => {
